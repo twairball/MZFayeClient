@@ -1,17 +1,18 @@
 PODS:
   - MZFayeClient (1.0.3):
     - SocketRocket
-  - SocketRocket (0.4.1)
+  - SocketRocket (0.4.2)
 
 DEPENDENCIES:
   - MZFayeClient (from `../`)
+  - SocketRocket (~> 0.4.2)
 
 EXTERNAL SOURCES:
   MZFayeClient:
-    :path: ../
+    :path: "../"
 
 SPEC CHECKSUMS:
   MZFayeClient: ac3defb0026d26f025444eeb021117be9cab4642
-  SocketRocket: ee0b5c34182d37bb4f1f8d628bbe737718126daa
+  SocketRocket: ffe08119b00ef982f6c37052a4705a057c8494ad
 
-COCOAPODS: 0.39.0.rc.1
+COCOAPODS: 0.38.2
