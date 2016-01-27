@@ -1,2 +1,5 @@
-platform :ios, '7.0'
+# platform :ios, '7.0'
 pod 'MZFayeClient', :path => '../'
+platform :ios, '8.0'
+use_frameworks!
+pod "SocketRocket", "~> 0.4.2"

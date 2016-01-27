@@ -83,6 +83,11 @@ typedef void (^MZFayeClientFailureHandler)(NSError *error);
 @property (nonatomic, readonly, strong) NSURL *url;
 
 /**
+ *  The NSURLRequest for the faye server.
+ */
+@property (nonatomic, readonly, strong) NSURLRequest *request;
+
+/**
  *  Uniquely identifies a client to the Bayeux server.
  */
 @property (nonatomic, readonly, strong) NSString *clientId;
@@ -140,6 +145,14 @@ typedef void (^MZFayeClientFailureHandler)(NSError *error);
 
 - (instancetype)initWithURL:(NSURL *)url;
 + (instancetype)clientWithURL:(NSURL *)url;
+
+/**
+ *  Init with NSURLRequest
+ *  Allows passing HTTP headers, to be passed to websocket
+ */
+- (instancetype)initWithRequest:(NSURLRequest *)request;
++ (instancetype)clientWithRequest:(NSURLRequest *)request;
+
 
 - (void)setExtension:(NSDictionary *)extension forChannel:(NSString *)channel;
 - (void)removeExtensionForChannel:(NSString *)channel;

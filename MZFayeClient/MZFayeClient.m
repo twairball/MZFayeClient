@@ -161,6 +161,7 @@ NSInteger const MZFayeClientDefaultMaximumAttempts = 5;
         _sentMessageCount = 0;
         _retryAttempt = 0;
         
+        _request = [[NSURLRequest alloc] initWithURL:url];
         _url = url;
     }
     return self;
@@ -169,6 +170,33 @@ NSInteger const MZFayeClientDefaultMaximumAttempts = 5;
 + (instancetype)clientWithURL:(NSURL *)url
 {
     return [[[self class] alloc] initWithURL:url];
+}
+
+- (instancetype)initWithRequest:(NSURLRequest *)request
+{
+    if (self = [super init]) {
+        _channelExtensions = [NSMutableDictionary dictionary];
+        _channelSubscribeHandlers = [NSMutableDictionary dictionary];
+        _channelUnsubscribeHandlers = [NSMutableDictionary dictionary];
+        _channelReceivedMessageHandlers = [NSMutableDictionary dictionary];
+        _sendMessageHandlers = [NSMutableDictionary dictionary];
+        _pendingChannelSubscriptions = [NSMutableSet set];
+        _openChannelSubscriptions = [NSMutableSet set];
+        _maximumRetryAttempts = MZFayeClientDefaultMaximumAttempts;
+        _retryInterval = MZFayeClientDefaultRetryInterval;
+        _shouldRetryConnection = YES;
+        _sentMessageCount = 0;
+        _retryAttempt = 0;
+        
+        _request = request;
+        _url = request.URL;
+    }
+    return self;
+}
+
++ (instancetype)clientWithRequest:(NSURLRequest *)request
+{
+    return [[[self class] alloc] initWithRequest:request];
 }
 
 #pragma mark - Bayeux procotol messages
@@ -538,9 +566,8 @@ NSInteger const MZFayeClientDefaultMaximumAttempts = 5;
 - (void)connectToWebSocket
 {
     [self disconnectFromWebSocket];
-
-    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:self.url];
-    self.webSocket = [[SRWebSocket alloc] initWithURLRequest:request];
+    
+    self.webSocket = [[SRWebSocket alloc] initWithURLRequest: self.request];
     self.webSocket.delegate = self;
     [self.webSocket open];
 }
